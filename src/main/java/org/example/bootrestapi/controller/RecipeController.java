@@ -1,5 +1,6 @@
 package org.example.bootrestapi.controller;
 
+import org.apache.coyote.BadRequestException;
 import org.example.bootrestapi.model.dto.RecipeDTO;
 import org.example.bootrestapi.model.entity.Recipe;
 import org.example.bootrestapi.service.RecipeService;
@@ -32,14 +33,18 @@ public class RecipeController {
     @PostMapping
 //    public Recipe addRecipe(@RequestBody RecipeDTO recipeDTO) {
     public ResponseEntity<Recipe> addRecipe(@RequestBody RecipeDTO recipeDTO) {
-        // 변환로직 1. 컨트롤러 - Body / Param
-        // 2. 서비스
-        Recipe recipe = new Recipe();
-        // 레시피 이름은 50자를 넘을 필요가 없을 듯합니다... 50자로 하죠!
-        recipe.setName(recipeDTO.name());
-        recipe.setDescription(recipeDTO.description());
+        try {
+            // 변환로직 1. 컨트롤러 - Body / Param
+            // 2. 서비스
+            Recipe recipe = new Recipe();
+            // 레시피 이름은 50자를 넘을 필요가 없을 듯합니다... 50자로 하죠!
+            recipe.setName(recipeDTO.name());
+            recipe.setDescription(recipeDTO.description());
 //        return recipeService.save(recipe);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(recipeService.save(recipe));
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(recipeService.save(recipe));
+        } catch (BadRequestException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 }
