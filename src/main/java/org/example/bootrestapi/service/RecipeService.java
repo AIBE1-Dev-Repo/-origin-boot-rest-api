@@ -10,4 +10,6 @@ public interface RecipeService {
     Recipe save(Recipe recipe) throws BadRequestException; // JPA
 
     void delete(long id);
+
+    Recipe findById(long id);
 }

@@ -56,4 +56,23 @@ public class RecipeController {
         // 204는 response body가 없다!
         // 200 등의 다른 코드를 쓰거나...
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Recipe> updateRecipe(@PathVariable long id, @RequestBody RecipeDTO recipeDTO) throws BadRequestException {
+        Recipe oldRecipe = recipeService.findById(id); // update -> 기존에 있는...
+        oldRecipe.setName(recipeDTO.name());
+        oldRecipe.setDescription(recipeDTO.description());
+        return ResponseEntity.status(HttpStatus.CREATED) // 200, 201
+                .body(recipeService.save(oldRecipe));
+    }
+
+    @PatchMapping("/{id}/name")
+    public ResponseEntity<Recipe> updateName(@PathVariable long id, @RequestBody RecipeDTO recipeDTO) throws BadRequestException {
+        Recipe oldRecipe = recipeService.findById(id);
+        oldRecipe.setName(recipeDTO.name());
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(recipeService.save(oldRecipe));
+        // patch -> void.는 경우.
+    }
+
 }
