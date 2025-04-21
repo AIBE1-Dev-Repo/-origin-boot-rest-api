@@ -1,10 +1,9 @@
 package org.example.bootrestapi.controller;
 
+import org.example.bootrestapi.model.dto.RecipeDTO;
 import org.example.bootrestapi.model.entity.Recipe;
 import org.example.bootrestapi.service.RecipeService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,10 +19,21 @@ public class RecipeController {
     @GetMapping
     public List<Recipe> getAllRecipes() {
         // localhost:8080/api/recipe
-        Recipe r = new Recipe();
-        r.setName("커리");
-        r.setDescription("맛있는 커리");
-        recipeService.save(r);
+        //        Recipe r = new Recipe();
+        //        r.setName("커리");
+        //        r.setDescription("맛있는 커리");
+        //        recipeService.save(r);
         return recipeService.findAll();
+    }
+
+    @PostMapping
+    public Recipe addRecipe(@RequestBody RecipeDTO recipeDTO) {
+        // 변환로직 1. 컨트롤러 - Body / Param
+        // 2. 서비스
+        Recipe recipe = new Recipe();
+        // 레시피 이름은 50자를 넘을 필요가 없을 듯합니다... 50자로 하죠!
+        recipe.setName(recipeDTO.name());
+        recipe.setDescription(recipeDTO.description());
+        return recipeService.save(recipe);
     }
 }
