@@ -10,7 +10,7 @@ import lombok.Data;
 @Data // Lombok
 public class Recipe {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // SEQUENCE는 MySQL에서 호환 안된다!
     long id;
     String name;
     String description;
