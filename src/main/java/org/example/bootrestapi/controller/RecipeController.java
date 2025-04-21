@@ -32,8 +32,8 @@ public class RecipeController {
 
     @PostMapping
 //    public Recipe addRecipe(@RequestBody RecipeDTO recipeDTO) {
-    public ResponseEntity<Recipe> addRecipe(@RequestBody RecipeDTO recipeDTO) {
-        try {
+    public ResponseEntity<Recipe> addRecipe(@RequestBody RecipeDTO recipeDTO) throws BadRequestException {
+//        try {
             // 변환로직 1. 컨트롤러 - Body / Param
             // 2. 서비스
             Recipe recipe = new Recipe();
@@ -43,8 +43,8 @@ public class RecipeController {
 //        return recipeService.save(recipe);
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(recipeService.save(recipe));
-        } catch (BadRequestException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
+//        } catch (BadRequestException e) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//        }
     }
 }
