@@ -26,4 +26,9 @@ public class RecipeServiceJPAImpl implements RecipeService {
         }
         return recipeRepository.save(recipe);
     }
+
+    @Override
+    public void delete(long id) {
+        recipeRepository.deleteById(id);
+    }
 }

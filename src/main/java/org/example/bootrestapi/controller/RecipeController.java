@@ -47,4 +47,13 @@ public class RecipeController {
 //            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 //        }
     }
+
+    @DeleteMapping("/{id}") // recipe/{id}. recipe?id=???
+    public ResponseEntity<Void> deleteRecipe(@PathVariable long id) {
+        recipeService.delete(id);
+        return ResponseEntity.noContent().build();
+//        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        // 204는 response body가 없다!
+        // 200 등의 다른 코드를 쓰거나...
+    }
 }
